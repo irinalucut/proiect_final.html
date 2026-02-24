@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cafenea AromaBoabe — Bun gust. Fiecare zi.</title>
+  <meta name="description" content="AromaBoabe — cafenea și prăjitorie locală. Cafea de origine, atmosferă caldă și abonamente flexibile." />
+
+  <style>
+    :root{
+      --color-primary:#5a3b2a;
+      --color-accent:#c79a6a;
+      --color-bg:#cec4b9;
+      --color-muted:#6b6b6b;
+      --radius:10px;
+      --focus: 3px rgba(199,154,106,0.25);
+      --max-width:1100px;
+      --ff-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff-sans);
+      background:var(--color-bg);
+      color:var(--color-primary);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .skip-link{
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:1rem;
+      top:1rem;
+      width:auto;
+      height:auto;
+      padding:.5rem .75rem;
+      background:#fff;
+      color:var(--color-primary);
+      border-radius:6px;
+      box-shadow:0 2px 8px rgba(0,0,0,.15);
+      z-index:1000;
+    }
+
+    .layout{display:flex;flex-direction:column;min-height:100vh}
+
+    .header{
+      background:var(--color-primary);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:1rem;
+    }
+    .header__logo{
+      font-weight:700;
+      font-size:1.25rem;
+      letter-spacing:.3px;
+    }
+    .header__nav{
+      display:flex;
+      gap:1rem;
+      align-items:center;
+    }
+    .header__nav-link{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      padding:.35rem .5rem;
+      border-radius:6px;
+    }
+    .header__nav-link:focus,
+    .header__nav-link:hover{
+      outline:none;
+      background:rgba(255,255,255,0.06);
+    }
+    .header__actions{display:flex;gap:.5rem;align-items:center}
+    .btn{
+      background:var(--color-accent);
+      color:#fff;
+      border:none;
+      padding:.5rem .9rem;
+      border-radius:6px;
+      font-weight:600;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:focus{box-shadow:var(--focus);outline:none}
+    .btn:active{transform:translateY(1px)}
+    .btn--ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.12)}
+
+    .hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:4rem 1rem;
+      min-height:52vh;
+      background-image:linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)), url('https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=9ad4b2b48c8b1e5e1f4d5b7c8c0f2a1d');
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+      margin-bottom:1rem;
+      animation: heroFadeIn .8s ease both;
+    }
+    @keyframes heroFadeIn{
+      from{opacity:0;transform:translateY(8px)}
+      to{opacity:1;transform:none}
+    }
+    .hero__title{font-size:2.1rem;margin:0 0 .5rem;font-weight:800;text-shadow:0 6px 18px rgba(0,0,0,.45)}
+    .hero__lead{max-width:780px;margin:0 auto 1.25rem;color:rgba(255,255,255,.92);font-size:1.05rem}
+    .hero__row{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+
+    .about{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1.25rem;
+      align-items:center;
+      margin-bottom:1.75rem;
+      padding:1.25rem;
+    }
+    .about__card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:1rem;
+      box-shadow:0 6px 20px rgba(86,67,58,0.06);
+    }
+    .about__title{font-size:1.25rem;margin:0 0 .5rem}
+    .about__text{margin:0;color:var(--color-muted)}
+
+    .media{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1rem;
+    }
+    .media__video{width:100%;height:300px;overflow:hidden; border-radius:8px;}
+    .media__video video {width: 100%; height: 100%; object-fit: cover;}
+    .media__audio{display:flex;align-items:center;gap:.6rem;padding:.6rem;background:#fff;border-radius:8px;box-shadow:0 6px 20px rgba(86,67,58,0.04)}
+    .media__audio small{color:var(--color-muted)}
+    
+    .menu__image{
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      border-radius:8px;
+      margin-bottom:.6rem;
+    }
+
+    .menu{
+      margin:1.25rem 0;
+      padding:1rem 0;
+    }
+    .menu__title{text-align:center;font-size:1.5rem;margin:0 0 1rem}
+    .menu__grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(1,1fr);
+    }
+    .menu__card{
+      background:#fff;
+      border-radius:10px;
+      padding:1rem;
+      box-shadow:0 6px 18px rgba(86,67,58,0.05);
+      transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s ease;
+      outline: none;
+      cursor: pointer; 
+    }
+    .menu__card:focus,
+    .menu__card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 14px 30px rgba(86,67,58,0.12);
+    }
+    .menu__name{font-weight:700;margin:0 0 .4rem}
+    .menu__desc{color:var(--color-muted);margin:0 0 .6rem;font-size:.95rem}
+    .menu__meta{display:flex;justify-content:space-between;align-items:center}
+
+    .sub{
+      background:#fff;
+      border-radius:10px;
+      padding:1rem;
+      box-shadow:0 6px 20px rgba(86,67,58,0.05);
+      margin:1rem 0;
+      display:flex;
+      flex-direction:column;
+      gap:.75rem;
+    }
+    .sub__row{display:flex;gap:.6rem;flex-wrap:wrap}
+    .input, textarea, select{
+      padding:.6rem .7rem;border:1px solid rgba(90,59,42,.12);border-radius:8px;font-size:.95rem;width:100%;
+      background:#fff;
+    }
+    .input:focus, textarea:focus, select:focus{outline:none;box-shadow:var(--focus)}
+
+    .locations{margin:1rem 0}
+    .locations__grid{display:grid;gap:1rem;grid-template-columns:repeat(1,1fr)}
+    .location__item{background:#fff;padding:1rem;border-radius:10px;box-shadow:0 6px 18px rgba(86,67,58,0.05)}
+
+    .contact{margin:1rem 0;padding:1rem;background:transparent}
+    .footer{background:var(--color-primary);color:#fff;padding:1rem;text-align:center;margin-top:2rem}
+
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #f0f0f0;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+    }
+    
+    .modal-close:hover {
+      background: #e0e0e0;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      margin: 0 0 0.5rem;
+      color: var(--color-primary);
+    }
+
+    .modal-full-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4a4a4a;
+      margin-bottom: 1rem;
+    }
+
+    .modal-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .detail-item strong {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-accent);
+    }
+
+    @media(min-width:640px){
+      .hero__title{font-size:2.6rem}
+      .menu__grid{grid-template-columns:repeat(2,1fr)}
+      .media{grid-template-columns:1fr 320px}
+      .about{grid-template-columns:1fr 1fr}
+      .locations__grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(min-width:1000px){
+      .menu__grid{grid-template-columns:repeat(3,1fr)}
+      .locations__grid{grid-template-columns:repeat(3,1fr)}
+      .hero{min-height:64vh}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      :focus{outline:2px solid rgba(0,0,0,0.02)}
+    }
+    .sr-only{
+      border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Sari la conținut</a>
+
+  <div class="layout">
+    <header class="header" role="banner" aria-label="Antet principal">
+      <div class="header__logo" aria-hidden="false">AromaBoabe</div>
+      <nav class="header__nav" role="navigation" aria-label="Meniu principal">
+        <a class="header__nav-link" href="#despre">Despre</a>
+        <a class="header__nav-link" href="#meniu">Meniu</a>
+        <a class="header__nav-link" href="#abonament">Abonament</a>
+        <a class="header__nav-link" href="#locatii">Locații</a>
+        <a class="header__nav-link" href="#contact">Contact</a>
+      </nav>
+      <div class="header__actions" role="group" aria-label="Acțiuni">
+        <button class="btn btn--ghost" aria-label="Caută">Caută</button>
+        <button class="btn" onclick="document.getElementById('abonament').scrollIntoView({behavior:'smooth'})">Abonează-te</button>
+      </div>
+    </header>
+
+    <main id="main" class="site-main" role="main">
+      
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <h1 id="hero-title" class="hero__title">Cafeaua care-ți începe ziua bine</h1>
+          <p class="hero__lead">La AromaBoabe prăjim local, alegem loturi de origine și îți aducem în ceașcă note curate, proaspete — în fiecare dimineață.</p>
+          <div class="hero__row">
+            <button class="btn" onclick="document.getElementById('meniu').scrollIntoView({behavior:'smooth'})">Vezi meniul</button>
+            <button class="btn btn--ghost" onclick="document.getElementById('locatii').scrollIntoView({behavior:'smooth'})">Găsește o locație</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="despre" class="container" aria-labelledby="despre-title">
+        <div class="about__card about" >
+          <div class="about__text">
+            <h2 class="about__title" id="despre-title">Despre AromaBoabe</h2>
+            <p>Suntem o prăjitorie și cafenea independentă. Lucrăm direct cu fermieri, testăm loturi micuțe și prăjim cu atenție pentru a scoate la lumină aromele naturale: fructate, florale sau ciocolătoase.</p>
+            <p>Ne place să servim oamenii cu o ceașcă bine făcută într-o ambianță relaxată — fie că stai la birou, fie că vii să lucrezi o oră cu laptopul.</p>
+          </div>
+          <div class="media" aria-label="Materiale media">
+            <div class="media__video" aria-hidden="false">
+              <video controls preload="metadata" aria-label="Video despre prăjitoria AromaBoabe">
+                <source src="https://v.ftcdn.net/02/97/71/65/700_F_297716501_kihCx8qESpru75eCUsqg0raYRpiGKSPv_ST.mp4" type="video/mp4">
+                Browserul nu suportă video.
+              </video>
+            </div>
+            <div>
+              <div class="media__audio" role="region" aria-label="Sunet ambient cafenea">
+                <audio id="ambientAudio" controls preload="none" aria-label="Audio ambient cafenea">
+                  <source src="https://soundcloud.com/gyvus/blue-sky-chillhop-records?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" type="audio/mpeg">
+                  Player audio neacceptat.
+                </audio>
+              </div>
+              <div><small>Sunet ambient: muzică plăcută în cafenea</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="meniu" class="container menu" aria-labelledby="meniu-title">
+        <h2 id="meniu-title" class="menu__title">Meniu recomandat</h2>
+        <div class="menu__grid" role="list" aria-label="Lista băuturilor">
+
+          <article class="menu__card" role="listitem" tabindex="0" 
+             data-name="Espresso Single" 
+             data-price="10 RON"
+             data-image="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a"
+             data-desc="Un shot clar, intens, din cele mai bune boabe de origine."
+             data-origin="Etiopia Yirgacheffe"
+             data-notes="Florale, Citrice, Iasomie"
+             data-process="Spălată">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1510707577719-ae7c14805e3a" alt="Espresso single">
+            <h3 class="menu__name">Espresso Single</h3>
+            <p class="menu__desc">Un shot clar, intens, din cele mai bune boabe de origine.</p>
+            <div class="menu__meta"><span>30 ml</span><strong>10 RON</strong></div>
+          </article>
+
+          <article class="menu__card" role="listitem" tabindex="0"
+             data-name="Cappuccino"
+             data-price="16 RON"
+             data-image="https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+             data-desc="Espresso combinat cu lapte spumat la temperatura perfectă (65°C)."
+             data-origin="Blendul casei (Brazilia & Columbia)"
+             data-notes="Ciocolată, Nuci, Caramel"
+             data-process="Naturală & Spălată">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93" alt="Cappuccino cu lapte spumat">
+            <h3 class="menu__name">Cappuccino</h3>
+            <p class="menu__desc">Espresso + lapte spumat. Textură cremoasă, spumă densă.</p>
+            <div class="menu__meta"><span>200 ml</span><strong>16 RON</strong></div>
+          </article>
+
+          <article class="menu__card" role="listitem" tabindex="0"
+             data-name="Flat White"
+             data-price="18 RON"
+             data-image="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
+             data-desc="Favoritul barmanilor. Două shot-uri de espresso și o cremă de lapte foarte fină."
+             data-origin="Blendul casei"
+             data-notes="Intens, Cacao, Fructe uscate"
+             data-process="Naturală">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085" alt="Cafea flat white">
+            <h3 class="menu__name">Flat White</h3>
+            <p class="menu__desc">Double shot, lapte fin — pentru o tisă echilibrată.</p>
+            <div class="menu__meta"><span>180 ml</span><strong>18 RON</strong></div>
+          </article>
+
+          <article class="menu__card" role="listitem" tabindex="0"
+             data-name="Pour Over V60"
+             data-price="20 RON"
+             data-image="https://images.unsplash.com/photo-1507133750040-4a8f57021571"
+             data-desc="O metodă lentă de preparare care evidențiază aciditatea și dulceața naturală."
+             data-origin="Kenya Kirinyaga"
+             data-notes="Coacăze negre, Roșii, Zahăr brun"
+             data-process="Spălată">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1507133750040-4a8f57021571" alt="Cafea pour over">
+            <h3 class="menu__name">Pour Over Filter</h3>
+            <p class="menu__desc">Preparare manuală care scoate nuanțele delicate ale boabelor.</p>
+            <div class="menu__meta"><span>250 ml</span><strong>20 RON</strong></div>
+          </article>
+
+          <article class="menu__card" role="listitem" tabindex="0"
+             data-name="Cold Brew"
+             data-price="19 RON"
+             data-image="https://images.unsplash.com/photo-1461023058943-07fcbe16d735"
+             data-desc="Infuzată la rece timp de 18 ore pentru un gust fin, fără aciditate și plin de cofeină."
+             data-origin="Columbia Huila"
+             data-notes="Ciocolată neagră, Melasă"
+             data-process="Spălată">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735" alt="Cold brew cu gheață">
+            <h3 class="menu__name">Cold Brew</h3>
+            <p class="menu__desc">Infuzie rece, corp rotund, finish dulce.</p>
+            <div class="menu__meta"><span>300 ml</span><strong>19 RON</strong></div>
+          </article>
+
+          <article class="menu__card" role="listitem" tabindex="0"
+             data-name="Latte Aromat"
+             data-price="20 RON"
+             data-image="https://images.unsplash.com/photo-1511920170033-f8396924c348"
+             data-desc="O îmbrățișare caldă. Cafea cu mult lapte și siropuri artizanale făcute de noi."
+             data-origin="Blendul casei"
+             data-notes="Dulce, Vanilie sau Caramel sărat"
+             data-process="N/A">
+            <img class="menu__image" src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Latte aromat">
+            <h3 class="menu__name">Latte Aromat</h3>
+            <p class="menu__desc">Espresso + lapte, cu sirop opțional (vanilie/caramel).</p>
+            <div class="menu__meta"><span>300 ml</span><strong>20 RON</strong></div>
+          </article>
+
+        </div>
+      </section>
+
+      <section id="abonament" class="container" aria-labelledby="abon-title">
+        <div class="sub" role="region" aria-labelledby="abon-title">
+          <h3 id="abon-title">Abonament boabe proaspete</h3>
+          <p class="about__text">Primești la ușă un pachet de 250g sau 1kg cu frecvență la alegere. Reduceri pentru abonați și livrare gratuită peste 2 comenzi.</p>
+          <form class="sub__form" action="#" method="post" onsubmit="event.preventDefault(); alert('Mulțumim — te-am înscris la abonament!');">
+            <div class="sub__row">
+              <label style="flex:1"><span class="sr-only">Nume complet</span><input class="input" type="text" name="sub-name" placeholder="Nume complet" required aria-label="Nume complet"></label>
+              <label style="flex:1"><span class="sr-only">Email</span><input class="input" type="email" name="sub-email" placeholder="adresa@exemplu.ro" required aria-label="Email"></label>
+            </div>
+            <div class="sub__row">
+              <label style="flex:1">
+                <select class="input" name="sub-plan" aria-label="Plan">
+                  <option value="250g">250g — lună</option>
+                  <option value="1kg">1kg — lună</option>
+                  <option value="250g-2sapt">250g — la 2 săptămâni</option>
+                </select>
+              </label>
+              <label style="flex:.4"><button class="btn" type="submit">Înscrie-te</button></label>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="locatii" class="container locations" aria-labelledby="locatii-title">
+        <h2 id="locatii-title" style="margin-bottom:.6rem">Locațiile noastre</h2>
+        <div class="locations__grid">
+          <div class="location__item" role="region" aria-label="Locația Oradea">
+            <strong>Oradea — Piața Centrală</strong>
+            <p class="about__text" style="margin:.4rem 0 0">Luni–Vineri: 08:00–20:00 • Sâmbătă: 09:00–18:00</p>
+          </div>
+          <div class="location__item" role="region" aria-label="Locația Cluj">
+            <strong>Cluj-Napoca — Str. Viilor 12</strong>
+            <p class="about__text" style="margin:.4rem 0 0">Luni–Vineri: 07:30–19:30 • Duminică: 09:00–17:00</p>
+          </div>
+          <div class="location__item" role="region" aria-label="Locația București">
+            <strong>București — Splaii Cafelei 3</strong>
+            <p class="about__text" style="margin:.4rem 0 0">Luni–Duminică: 08:00–22:00</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="container contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact</h2>
+        <p class="about__text">Ai o întrebare, vrei o ofertă B2B sau să organizezi un eveniment privat? Scrie-ne.</p>
+        <form class="contact__form" action="#" method="post" onsubmit="event.preventDefault(); alert('Mesaj trimis — îți răspundem curând!');">
+          <div style="display:grid;grid-template-columns:1fr;gap:.6rem">
+            <label><span class="sr-only">Nume</span><input class="input" type="text" name="name" placeholder="Nume" required aria-label="Nume"></label>
+            <label><span class="sr-only">Email</span><input class="input" type="email" name="email" placeholder="Email" required aria-label="Email"></label>
+            <label><span class="sr-only">Mesaj</span><textarea class="input" name="message" rows="4" placeholder="Mesajul tău..." aria-label="Mesaj"></textarea></label>
+            <div style="display:flex;gap:.5rem;justify-content:flex-end">
+              <button class="btn" type="submit">Trimite</button>
+              <button class="btn btn--ghost" type="reset">Resetează</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo" aria-label="Footer">
+      <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <div>&copy; <span id="year"></span> AromaBoabe — PENTRU TOATE GUSTURILE </div>
+        <div style="color:rgba(255,255,255,.85)"> FOLLOW US : Instagram        • Facebook</div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="coffeeModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="toggleModal(false)">&times;</button>
+      <img id="m-img" class="modal-img" src="" alt="Detalii cafea">
+      <h2 id="m-title" class="modal-title">Titlu Cafea</h2>
+      <div class="modal-details-grid">
+         <div class="detail-item"><strong>Origine:</strong> <span id="m-origin">-</span></div>
+         <div class="detail-item"><strong>Note:</strong> <span id="m-notes">-</span></div>
+         <div class="detail-item"><strong>Procesare:</strong> <span id="m-process">-</span></div>
+         <div class="detail-item"><strong>Preț:</strong> <span id="m-price">-</span></div>
+      </div>
+      <p id="m-desc" class="modal-full-desc">Descriere detaliată.</p>
+      <button class="btn" style="width:100%" onclick="toggleModal(false)">Închide</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    
+    const modal = document.getElementById('coffeeModal');
+    const mImg = document.getElementById('m-img');
+    const mTitle = document.getElementById('m-title');
+    const mDesc = document.getElementById('m-desc');
+    const mOrigin = document.getElementById('m-origin');
+    const mNotes = document.getElementById('m-notes');
+    const mProcess = document.getElementById('m-process');
+    const mPrice = document.getElementById('m-price');
+
+   
+    function toggleModal(show) {
+      if(show) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; 
+      } else {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; 
+      }
+    }
+
+    
+    function closeModal(e) {
+      if (e.target === modal) {
+        toggleModal(false);
+      }
+    }
+
+    
+    document.querySelectorAll('.menu__card').forEach(card => {
+      
+      card.addEventListener('click', () => {
+        
+        mTitle.textContent = card.getAttribute('data-name');
+        mDesc.textContent = card.getAttribute('data-desc');
+        mPrice.textContent = card.getAttribute('data-price');
+        mOrigin.textContent = card.getAttribute('data-origin');
+        mNotes.textContent = card.getAttribute('data-notes');
+        mProcess.textContent = card.getAttribute('data-process');
+        mImg.src = card.getAttribute('data-image');
+        
+        toggleModal(true);
+      });
+
+      
+      card.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          card.click(); 
+        }
+      })
+    });
+
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('*').forEach(el=> el.style.animationDuration = '0s');
+    }
+  </script>
+</body>
+</html>
